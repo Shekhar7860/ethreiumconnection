@@ -13,6 +13,7 @@ class App extends Component {
       account: "",
       taskCount: 0,
       tasks: [],
+      balance: 0,
     };
   }
 
@@ -69,6 +70,17 @@ class App extends Component {
     this.setState({ account: "" });
   };
 
+  getData = async () => {
+    console.log("weee", web3.eth);
+    const d = await web3.eth.getAccounts();
+    console.log("f", d);
+  };
+  getBalance = async () => {
+    const balance = await web3.eth.getBalance(this.state.account);
+    console.log("balcne", balance);
+    this.setState({ balance });
+  };
+
   render() {
     return (
       <div
@@ -89,6 +101,14 @@ class App extends Component {
             Log Out
           </button>
         ) : null}
+        <div style={{ marginTop: 30 }}></div>
+        {this.state.account ? (
+          <button className={"buttonreact"} onClick={this.getBalance}>
+            Get Account Balance
+          </button>
+        ) : null}
+        {this.state.account ? <h3>{this.state.balance}</h3> : null}
+        <div onClick={this.getData}> Get Data</div>
       </div>
     );
   }
